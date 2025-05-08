@@ -1,0 +1,28 @@
+import java.util.*;
+
+class BeingZero {
+    int f(int c, int sum, int i, int a[], int k, Map<String, Integer> mp) {
+        if (i == a.length) {
+            if (c > 0) {
+                if (sum / c == k && (sum % c) == 0) {
+                    return 1;
+                }
+            }
+            return 0;
+        }
+
+        String key = i + "#" + sum + "#" + c;
+        if (mp.containsKey(key)) return mp.get(key);
+
+        int lft = f(c, sum, i + 1, a, k, mp);
+        int rgt = f(c + 1, sum + a[i], i + 1, a, k, mp);
+
+        mp.put(key, lft + rgt);
+        return lft + rgt;
+    }
+
+    public int countSubsequenceWithAvgEqualToTarget(int a[], int k) {
+        Map<String, Integer> mp = new HashMap<>();
+        return f(0, 0, 0, a, k, mp);
+    }
+}
