@@ -1,0 +1,54 @@
+import java.util.*;
+import java.io.*;
+
+class BeingZero {
+    public long countInversions(int a[], int n) {
+        int f[] = new int[n];
+        int s[] = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            f[i] = a[i];
+            s[i] = a[i];
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            if (f[i] == 1) {
+                f[i] = 0;
+                break;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (s[i] == 0) {
+                s[i] = 1;
+                break;
+            }
+        }
+
+        int fz[] = new int[n];
+        int c = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (f[i] == 0) c++;
+            fz[i] = c;
+        }
+
+        int sz[] = new int[n];
+        c = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (s[i] == 0) c++;
+            sz[i] = c;
+        }
+
+        long fs = 0, ss = 0;
+        for (int i = 0; i < n; i++) {
+            if (f[i] == 1) {
+                fs += fz[i];
+            }
+            if (s[i] == 1) {
+                ss += sz[i];
+            }
+        }
+
+        return Math.max(fs, ss);
+    }
+}
